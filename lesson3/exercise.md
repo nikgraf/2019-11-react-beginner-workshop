@@ -9,6 +9,11 @@ Run `npm install --save leaflet`
 ```js
 import Leaflet from "leaflet";
 
+const link = document.createElement("link");
+link.rel = "stylesheet";
+link.href = "https://unpkg.com/leaflet@latest/dist/leaflet.css";
+document.body.appendChild(link);
+
 const map = Leaflet.map(!!TODO_ELEMENT!!).setView([51.505, -0.09], 13);
 
 Leaflet.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
