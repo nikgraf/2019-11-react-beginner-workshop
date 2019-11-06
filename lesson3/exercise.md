@@ -21,6 +21,7 @@ Leaflet.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 ```
+**Hint** Leaflet won't define any height. So make sure your ref element has a height defined e.g. `<div style={{ height: 400 }} />`
 
 2. For each entry show a small map and center the map at the location position.
 3. Bonus Exercise: Add one larger map on top that accepts a prop `markers` incl. the position and name. Use this to display all the places with markers.
