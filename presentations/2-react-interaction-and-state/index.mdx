@@ -1,0 +1,355 @@
+import { prism } from "mdx-deck/themes";
+
+export const themes = [prism];
+
+# React Interaction and State Management
+
+---
+
+## Interaction
+
+- Clicking a button
+- Updating an address field
+- Dragging an UI element
+- Submit a form
+
+They have one thing in common: they are changing state!
+
+---
+
+## Other Events changing State
+
+- New data received from a request response
+- New data received from a websocket message
+
+---
+
+import HandleClick from "./assets/HandleClick";
+
+<HandleClick />
+
+---
+
+```jsx
+import React from "react";
+
+const handleClick = clickEvent => {
+  console.log(clickEvent);
+  alert("Clicked!");
+};
+
+function Example() {
+  return <button onClick={handleClick}>Click me!</button>;
+}
+
+export default Example;
+```
+
+---
+
+```jsx
+<!-- JSX -->
+<button onClick={handleClick}>Click me</button>
+<!-- HTML -->
+<button onclick="handleClick()">Click me</button>
+```
+
+---
+
+## Synthetic Events
+
+### Fixing cross-browser issues 🙉🎉👌
+
+---
+
+```jsx
+import React from "react";
+
+let count = 0;
+
+function App() {
+  return (
+    <div>
+      <p>You clicked {count} times</p>
+      <button
+        onClick={evt => {
+          console.log(evt);
+          count += 1;
+        }}
+      >
+        Click me
+      </button>
+    </div>
+  );
+}
+
+export default App;
+```
+
+---
+
+import ChangeWithoutUpdate from "./assets/ChangeWithoutUpdate";
+
+<ChangeWithoutUpdate />
+
+---
+
+## setState
+
+---
+
+```jsx
+import React from "react";
+
+class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      count: 0
+    };
+  }
+
+  render() {
+    return (
+      <div>
+        <p>You clicked {this.state.count} times</p>
+        <button onClick={() => this.setState({ count: this.state.count + 1 })}>
+          Click me
+        </button>
+      </div>
+    );
+  }
+}
+
+export default App;
+```
+
+---
+
+import ChangeSetState from "./assets/ChangeSetState";
+
+<ChangeSetState />
+
+---
+
+## Forms & Inputs
+
+---
+
+```jsx
+import React from "react";
+
+function App() {
+  return (
+    <form>
+      <input type="text" value="write in here …" />
+    </form>
+  );
+}
+
+export default App;
+```
+
+---
+
+import Value from "./assets/Value";
+
+<Value />
+
+---
+
+```jsx
+import React from "react";
+
+function App() {
+  return (
+    <form>
+      <input type="text" defaultValue="write in here …" />
+    </form>
+  );
+}
+
+export default App;
+```
+
+---
+
+import DefaultValue from "./assets/DefaultValue";
+
+<DefaultValue />
+
+---
+
+## Properties
+
+- value
+- defaultValue
+- onChange (event.target.value)
+
+- checked
+- defaultChecked
+- onChange (event.target.checked)
+
+---
+
+## defaultValue != placeholder
+
+---
+
+```jsx
+import React from "react";
+
+function App() {
+  return (
+    <form>
+      <input
+        type="text"
+        defaultValue="John"
+        placeholder="Please provide your given name"
+      />
+    </form>
+  );
+}
+
+export default App;
+```
+
+---
+
+import Placeholder from "./assets/Placeholder";
+
+<Placeholder />
+
+---
+
+## Uncontrolled Component
+
+### vs
+
+## Controlled Component
+
+---
+
+```jsx
+import React from "react";
+
+class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      text: "Hello"
+    };
+  }
+
+  render() {
+    return (
+      <form>
+        <input
+          type="text"
+          value={this.state.text}
+          onChange={evt => this.setState({ text: evt.target.value })}
+        />
+        <p>Preview: {this.state.text}</p>
+      </form>
+    );
+  }
+}
+
+export default App;
+```
+
+---
+
+import ChangeSetStateInput from "./assets/ChangeSetStateInput";
+
+<ChangeSetStateInput />
+
+---
+
+```jsx
+import React from "react";
+
+class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      name: "",
+      age: 0
+    };
+  }
+
+  render() {
+    return (
+      <form>
+        <input
+          type="text"
+          value={this.state.name}
+          placeholder="Please provide your name"
+          onChange={evt => this.setState({ name: evt.target.value })}
+        />
+        <input
+          type="number"
+          value={this.state.age}
+          placeholder="Please provide your age"
+          onChange={evt => this.setState({ age: evt.target.value })}
+        />
+      </form>
+    );
+  }
+}
+
+export default App;
+```
+
+---
+
+import ChangeSetStateInputs from "./assets/ChangeSetStateInputs";
+
+<ChangeSetStateInputs />
+
+---
+
+```jsx
+import React from "react";
+
+const Toggle = props => {
+  return <button onClick={props.onToggle}>Toggle</button>;
+};
+
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isActive: false
+    };
+  }
+
+  handleToggle = changeEvent => {
+    this.setState({
+      isActive: !this.state.isActive
+    });
+  };
+
+  render() {
+    return (
+      <div>
+        <Toggle onToggle={this.handleToggle} />
+        <div>{this.state.isActive ? "Active" : "Inactive"}</div>
+        <Toggle onToggle={this.handleToggle} />
+      </div>
+    );
+  }
+}
+
+export default App;
+```
+
+---
+
+import ChangeParentState from "./assets/ChangeParentState";
+
+<ChangeParentState />
+
+---
+
+# The end

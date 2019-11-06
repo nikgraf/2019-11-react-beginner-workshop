@@ -1,0 +1,449 @@
+import { prism } from "mdx-deck/themes";
+
+export const themes = [prism];
+
+# React Basics
+
+---
+
+## What it is …
+
+- Focus on the UI
+- One-way reactive data flow (no two-way data binding)
+- Virtual DOM
+- Large ecosystem around it
+
+---
+
+## What it isn't …
+
+- Not an opinionated full front-end framework
+- No routing
+- No data fetching
+
+---
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script src="https://unpkg.com/react@latest/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@latest/dist/react-dom.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      const hello = React.createElement("h1", null, "Hello, world!");
+      ReactDOM.render(hello, document.getElementById("root"));
+    </script>
+  </body>
+</html>
+```
+
+---
+
+import hello from "./assets/hello.png";
+
+<img src={hello} />
+
+---
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script src="https://unpkg.com/react@latest/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@latest/dist/react-dom.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      const elementTree = React.createElement("div", null, [
+        React.createElement("h1", null, "Hello World"),
+        React.createElement("img", {
+          src: "http://i.giphy.com/ASd0Ukj0y3qMM.gif"
+        })
+      ]);
+      ReactDOM.render(elementTree, document.getElementById("root"));
+    </script>
+  </body>
+</html>
+```
+
+---
+
+import helloII from "./assets/helloII.png";
+
+<img src={helloII} />
+
+---
+
+## JSX
+
+- JSX is a preprocessor step that adds XML syntax to JavaScript
+- Use curly braces are to provide data
+- HTML attributes are camelCased
+- className is used instead of class
+- JSX uses the upper vs. lower case convention to distinguish between components and HTML tags
+- Fragment syntax for wrapping a list elements
+
+---
+
+```jsx
+// Input (JSX):
+const app = <h2>Conclusion</h2>;
+// Output (JS):
+const app = React.createElement("h2", null, "Conclusion");
+```
+
+---
+
+```jsx
+// Input (JSX):
+const app = <h2 id="headline5">Conclusion</h2>;
+// Output (JS):
+const app = React.createElement("h2", { id: "headline5" }, "Conclusion");
+```
+
+---
+
+```jsx
+// Input (JSX):
+const app = <Card color="white" active={true} />;
+// Output (JS):
+const app = React.createElement(Card, { color: "white", active: true });
+```
+
+---
+
+## Children
+
+```jsx
+// Input (JSX):
+const app = (
+  <Card>
+    <h2>Conclusion</h2>
+  </Card>
+);
+// Output (JS):
+const app = React.createElement(
+  Card,
+  {},
+  React.createElement("h2", {}, "Conclusion")
+);
+```
+
+---
+
+## Fragments
+
+```jsx
+// Input (JSX):
+const app = (
+  <>
+    <h1>Conclusion</h1>
+    <p>Lorem ipsum</p>
+  </>
+);
+// Output (JS):
+const app = React.createElement(
+  React.Fragment,
+  {}
+  [
+    React.createElement("h1", {}, "Conclusion"),
+    React.createElement("p", {}, "Lorem ipsum"),
+  ]
+);
+```
+
+---
+
+## Components
+
+---
+
+```jsx
+import React from "react";
+
+const Hello = () => {
+  return <div>Hello World!</div>;
+};
+
+export default Hello;
+```
+
+---
+
+```jsx
+import React from "react";
+import ReactDOM from "react-dom";
+
+const Hello = () => {
+  return <div>Hello World!</div>;
+};
+
+const node = document.getElementById("root");
+
+ReactDOM.render(<Hello />, node);
+```
+
+---
+
+import HelloWorldI from "./assets/HelloWorldI";
+
+<HelloWorldI />
+
+---
+
+## What is a Component?
+
+A function that returns JSX.
+
+That said there are also React Class Components!
+
+---
+
+```jsx
+import React from "react";
+
+const Hello = () => {
+  return (
+    <div id="something">
+      <h2>Hello World!</h2>
+      <img src={"http://i.giphy.com/3o6Ztl7oraKm4ZJ9mw.gif"} height="240" />
+    </div>
+  );
+};
+
+export default Hello;
+```
+
+---
+
+import HelloWorldII from "./assets/HelloWorldII";
+
+```jsx
+<Hello />
+```
+
+<HelloWorldII />
+
+---
+
+```jsx
+import React from "react";
+
+const Hello = props => {
+  return (
+    <div>
+      <h2>Hello {props.name}!</h2>
+    </div>
+  );
+};
+
+export default Hello;
+```
+
+---
+
+```jsx
+import React from "react";
+import ReactDOM from "react-dom";
+import Hello from "./Hello";
+
+const node = document.getElementById("root");
+
+ReactDOM.render(<Hello name="Maciej" />, node);
+```
+
+---
+
+import HelloWorldIII from "./assets/HelloWorldIII";
+
+<HelloWorldIII name="Maciej" />
+
+---
+
+import tree from "./assets/tree.svg";
+
+<img src={tree} />
+
+---
+
+## What about conditionals in JSX?
+
+There are none, just use JavaScript!
+
+---
+
+```jsx
+import React from "react";
+
+const Friend = props => {
+  let status;
+  if (props.lastActiveInSec < 60) {
+    status = <span>Online</span>;
+  } else {
+    status = <span>Offline</span>;
+  }
+
+  return (
+    <div>
+      <div>{props.name}</div>
+      {status}
+    </div>
+  );
+};
+
+export default Friend;
+```
+
+---
+
+import FriendIfElse from "./assets/FriendIfElse";
+
+```jsx
+<Friend name="Maciej" lastActiveInSec={40} />
+<Friend name="Max" lastActiveInSec={3020} />
+```
+
+<FriendIfElse name="Maciej" lastActiveInSec="40" />
+<FriendIfElse name="Max" lastActiveInSec="3020" />
+
+---
+
+```jsx
+import React from "react";
+
+const Friend = props => {
+  return (
+    <div>
+      <div>{props.name}</div>
+      <span>{props.lastActiveInSec < 60 ? "Online" : "Offline"}</span>
+    </div>
+  );
+};
+
+export default Friend;
+```
+
+---
+
+import FriendIfElseTernary from "./assets/FriendIfElseTernary";
+
+```jsx
+<FriendIfElseTernary name="Maciej" lastActiveInSec="40" />
+<FriendIfElseTernary name="Max" lastActiveInSec="3020" />
+```
+
+<FriendIfElseTernary name="Maciej" lastActiveInSec="40" />
+<FriendIfElseTernary name="Max" lastActiveInSec="3020" />
+
+---
+
+```jsx
+import React from "react";
+
+const Friend = props => {
+  return (
+    <div>
+      <div>{props.name}</div>
+      {Boolean(props.isBrother) && <i>Your Brother</i>}
+    </div>
+  );
+};
+
+export default Friend;
+```
+
+---
+
+import FriendAndAnd from "./assets/FriendAndAnd";
+
+```jsx
+<FriendAndAnd name="Stefan" isBrother={true} />
+<FriendAndAnd name="Max" isBrother={false} />
+```
+
+<FriendAndAnd name="Stefan" isBrother={true} />
+<FriendAndAnd name="Max" isBrother={false} />
+
+---
+
+```jsx
+import React from "react";
+
+const Friends = props => {
+  return (
+    <ul>
+      {props.friends.map(friend => {
+        return <li>{friend.name}</li>;
+      })}
+    </ul>
+  );
+};
+
+export default Friends;
+```
+
+---
+
+import Friends from "./assets/Friends";
+
+```jsx
+<Friends friends={[{ name: "Max" }, { name: "Sebastian" }]} />
+```
+
+<Friends friends={[{ name: "Max" }, { name: "Sebastian" }]} />
+
+---
+
+```jsx
+import React from "react";
+
+const Friends = props => {
+  return (
+    <ul>
+      {props.friends.map(friend => {
+        return <li key={friend.id}>{friend.name}</li>;
+      })}
+    </ul>
+  );
+};
+
+export default Friends;
+```
+
+---
+
+import FriendsKey from "./assets/FriendsKey";
+
+```jsx
+<FriendsKey friends={[{ name: "Max" }, { name: "Sebastian" }]} />
+```
+
+<FriendsKey friends={[{ name: "Max" }, { name: "Sebastian" }]} />
+
+---
+
+## Reconciliation Strategy
+
+## aka VirtualDOM
+
+---
+
+import vdom from "./assets/vdom.svg";
+
+<img src={vdom} />
+
+---
+
+import vdomChange from "./assets/vdomChange.svg";
+
+<img src={vdomChange} />
+
+---
+
+# The end

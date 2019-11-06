@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script src="https://unpkg.com/react@latest/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@latest/dist/react-dom.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      const elementTree = React.createElement("div", null, [
+        React.createElement("h1", null, "Hello World"),
+        React.createElement("img", {
+          src: "http://i.giphy.com/ASd0Ukj0y3qMM.gif"
+        })
+      ]);
+      ReactDOM.render(elementTree, document.getElementById("root"));
+    </script>
+  </body>
+</html>
