@@ -22,6 +22,9 @@ ReactDOM.render(<App />, document.getElementById("root"));
 ## React - Rendering & Components
 
 1. Render the whole list into one component. It should contain a preview only showing the name.
+
+_Hint_ creatre your own or copy the dataset from `solution/src/data.js` to your `src/data.js` and import it using `import data from "./data.js"`
+
 2. Add conditinal divs rendering the phone and email address if available in the data.
 3. Add a Phone component that replaces `+43` with `0` and replace the phone rendering using this component
 4. Add the following styles to your application and create a generic Card component rendering a div that's used to wrap each place entry in the list.
