@@ -1,0 +1,6 @@
+.card {
+  display: block;
+  border: 1px solid #ccc;
+  margin-bottom: 1rem;
+  padding: 1rem;
+}
