@@ -1,0 +1,385 @@
+import { prism } from "mdx-deck/themes";
+
+export const themes = [prism];
+
+## React Hooks
+
+Hooks are a new feature that lets you use state and other React features without writing a class.
+
+---
+
+## useState
+
+useState is a Hook
+
+We call it inside a function component to add some local state to it. React will preserve this state between re-renders. useState returns a pair: the current state value and a function that lets you update it. You can call this function from an event handler or somewhere else.
+
+The only argument to useState is the initial state. In the example above, it is 0 because our counter starts from zero. This can anything e.g. a deeply nested object. The initial state argument is only used during the first render.
+
+---
+
+```jsx
+import React, { useState } from "react";
+
+function App() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <p>You clicked {count} times</p>
+      <button onClick={() => setCount(count + 1)}>Click me</button>
+    </div>
+  );
+}
+
+export default App;
+```
+
+---
+
+```jsx
+import React, { useState } from "react";
+
+function App() {
+  const [text, setText] = useState("Hello");
+
+  return (
+    <form>
+      <input
+        type="text"
+        value={text}
+        onChange={evt => setText(evt.target.value)}
+      />
+      <p>Preview: {text}</p>
+    </form>
+  );
+}
+
+export default App;
+```
+
+---
+
+import ChangeSetStateInput from "./assets/ChangeSetStateInput";
+
+<ChangeSetStateInput />
+
+---
+
+```jsx
+import React, { useState } from "react";
+
+function App() {
+  const [name, setName] = useState("");
+  const [age, setAge] = useState(0);
+
+  return (
+    <form>
+      <input
+        type="text"
+        value={name}
+        placeholder="Please provide your name"
+        onChange={evt => setName(evt.target.value)}
+      />
+      <input
+        type="number"
+        value={age}
+        placeholder="Please provide your age"
+        onChange={evt => setAge(evt.target.value)}
+      />
+    </form>
+  );
+}
+
+export default App;
+```
+
+---
+
+import ChangeSetStateInputs from "./assets/ChangeSetStateInputs";
+
+<ChangeSetStateInputs />
+
+---
+
+```jsx
+import React, { useState } from "react";
+
+function Toggle(props) {
+  return <button onClick={props.onToggle}>Toggle</button>;
+}
+
+function App() {
+  const [active, setActive] = useState(true);
+  function toggle() {
+    // setActive(currentActive => !currentActive);
+    setActive(!active);
+  }
+
+  return (
+    <div>
+      <Toggle onToggle={toggle} />
+      <div>{active ? "Active" : "Inactive"}</div>
+    </div>
+  );
+}
+
+export default App;
+```
+
+---
+
+import ChangeParentState from "./assets/ChangeParentState";
+
+<ChangeParentState />
+
+---
+
+# React's useEffect Hook
+
+---
+
+The Effect Hook lets you perform side effects in function components. useEffect runs every time the component gets updated (mounting, update, removed).
+
+There are two common kinds of side effects in React components: those that don’t require cleanup, and those that do.
+
+---
+
+```jsx
+import React, { useState, useEffect } from "react";
+
+function App() {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    document.title = `${count} new messages`;
+  });
+
+  return (
+    <div>
+      <p>{count} new messages …</p>
+      <button onClick={() => setCount(count + 1)}>One new message</button>
+      <button onClick={() => setCount(0)}>Reset</button>
+    </div>
+  );
+}
+
+export default App;
+```
+
+---
+
+import Title from "./assets/Title";
+
+<Title />
+
+---
+
+```jsx
+import React, { useEffect } from "react";
+
+function App() {
+  function onOnline(evt) {
+    console.log("online", evt);
+  }
+  useEffect(() => {
+    window.addEventListener("online", onOnline);
+  });
+
+  return <div>Drop v1</div>;
+}
+
+export default App;
+```
+
+---
+
+import Drop from "./assets/Drop";
+
+<Drop />
+
+---
+
+```jsx
+import React, { useEffect } from "react";
+
+function App() {
+  function onOnline(evt) {
+    console.log("online", evt);
+  }
+  useEffect(() => {
+    window.addEventListener("online", onOnline);
+    return () => {
+      window.removeEventListener("online", onOnline);
+    };
+  });
+
+  return <div>Drop v2</div>;
+}
+
+export default App;
+```
+
+---
+
+import DropII from "./assets/DropII";
+
+<DropII />
+
+---
+
+```jsx
+import React, { useEffect } from "react";
+
+function App() {
+  function onOnline(evt) {
+    console.log("online", evt);
+  }
+  useEffect(() => {
+    window.addEventListener("online", onOnline);
+    return () => {
+      window.removeEventListener("online", onOnline);
+    };
+  }, []);
+
+  return <div>Drop v3</div>;
+}
+
+export default App;
+```
+
+---
+
+import DropIII from "./assets/DropIII";
+
+<DropIII />
+
+---
+
+```jsx
+import React, { useEffect, useState } from "react";
+
+function App() {
+  const [isOnline, setOnline] = useState(true);
+
+  function onOffline() {
+    setOnline(false);
+  }
+  function onOnline() {
+    setOnline(true);
+  }
+  useEffect(() => {
+    window.addEventListener("online", onOnline);
+    window.addEventListener("offline", onOffline);
+
+    return () => {
+      window.removeEventListener("online", onOnline);
+      window.removeEventListener("offline", onOffline);
+    };
+  }, []);
+
+  return <div>{isOnline ? "Online" : "Offline"}</div>;
+}
+
+export default App;
+```
+
+---
+
+import DropIV from "./assets/DropIV";
+
+<DropIV />
+
+---
+
+# React's useRef
+
+---
+
+## What if we want to bail out of React?
+
+Why? Because there is library X doing a great job:
+
+- D3 for Charts
+- Leaflet / Google Maps for Maps
+- and many more …
+
+---
+
+```jsx
+import React, { Fragment, useRef } from "react";
+
+function TextInputWithFocusButton() {
+  const inputElement = useRef(null);
+
+  const onButtonClick = () => {
+    // `current` points to the mounted text input element
+    inputElement.current.focus();
+  };
+
+  return (
+    <Fragment>
+      <input ref={inputElement} type="text" />
+      <button onClick={onButtonClick}>Focus on the Input</button>
+    </Fragment>
+  );
+}
+
+export default TextInputWithFocusButton;
+```
+
+---
+
+import Focus from "./assets/Focus";
+
+<Focus />
+
+---
+
+```jsx
+import React, { useRef, useEffect } from "react";
+import Leaflet from "leaflet";
+
+const link = document.createElement("link");
+link.rel = "stylesheet";
+link.href = "https://unpkg.com/leaflet@1.3.4/dist/leaflet.css";
+document.body.appendChild(link);
+
+function Map() {
+  const mapWrapperElement = useRef(null);
+
+  useEffect(() => {
+    const map = Leaflet.map(mapWrapperElement.current).setView(
+      [51.505, -0.09],
+      13
+    );
+
+    Leaflet.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+  }, []);
+
+  return <div ref={mapWrapperElement} style={{ width: 600, height: 400 }} />;
+}
+
+function App() {
+  return (
+    <div>
+      <Map />
+    </div>
+  );
+}
+
+export default App;
+```
+
+---
+
+import Map from "./assets/Map";
+
+<Map />
+
+---
+
+# The end
