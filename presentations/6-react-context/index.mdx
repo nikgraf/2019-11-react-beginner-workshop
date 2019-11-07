@@ -1,0 +1,149 @@
+import { prism } from "mdx-deck/themes";
+
+export const themes = [prism];
+
+# React's Context
+
+---
+
+Context provides a way to pass data through the component tree without having to pass props down manually at every level.
+
+---
+
+import tree from "./assets/tree.svg";
+
+<img src={tree} />
+
+---
+
+Context is designed to share data that can be considered “global” for a tree of React components, such as the current authenticated user, theme, or preferred language.
+
+---
+
+```jsx
+import React from "react";
+
+function ProductDetail(props) {
+  return (
+    <div>
+      <h1>{props.name}</h1>
+      <Comments />
+    </div>
+  );
+}
+
+function Comments() {
+  return (
+    <div>
+      <h2>Comments</h2>
+      <p>Anna: Best board ever!</p>
+      <p>Tim: I broke my arm with this board :(</p>
+    </div>
+  );
+}
+
+function App() {
+  return <ProductDetail name="Snowboard" />;
+}
+
+export default App;
+```
+
+---
+
+import LanguageBase from "./assets/LanguageBase";
+
+<LanguageBase />
+
+---
+
+```jsx
+import React from "react";
+
+function ProductDetail(props) {
+  return (
+    <div>
+      <h1>{props.name}</h1>
+      <Comments language={props.language} />
+    </div>
+  );
+}
+
+function Comments(props) {
+  return (
+    <div>
+      <h2>{props.language === "de" ? "Kommentare" : "Comments"}</h2>
+      <p>Anna: Best board ever!</p>
+      <p>Tim: I broke my arm with this board :(</p>
+    </div>
+  );
+}
+
+function App() {
+  return <ProductDetail name="Snowboard" language="de" />;
+}
+
+export default App;
+```
+
+---
+
+import LanguageProps from "./assets/LanguageProps";
+
+<LanguageProps />
+
+---
+
+```jsx
+import React, { useContext } from "react";
+
+const LanguageContext = React.createContext("en");
+
+function ProductDetail(props) {
+  return (
+    <div>
+      <h1>{props.name}</h1>
+      <Comments />
+    </div>
+  );
+}
+
+function Comments() {
+  const language = useContext(LanguageContext);
+  return (
+    <div>
+      <h2>{language === "de" ? "Kommentare" : "Comments"}</h2>
+      <p>Anna: Best board ever!</p>
+      <p>Tim: I broke my arm with this board :(</p>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <LanguageContext.Provider value="de">
+      <ProductDetail name="Snowboard" />
+    </LanguageContext.Provider>
+  );
+}
+
+export default App;
+```
+
+---
+
+import LanguageContext from "./assets/LanguageContext";
+
+<LanguageContext />
+
+---
+
+## Examples when to use
+
+- theme
+- language
+- currentUser (to filter lists or allow special features like remove myself from x)
+
+---
+
+# The end
