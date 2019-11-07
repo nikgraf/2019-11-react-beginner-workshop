@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Places from "./Places";
-import Map from "./Map";
+import AddForm from "./AddForm";
 import data from "./data";
 
 class App extends React.Component {
@@ -21,6 +21,7 @@ class App extends React.Component {
       <>
         <h1>Places</h1>
         <Places places={this.state.places} addPlace={this.addPlace} />
+        <AddForm addPlace={this.addPlace} />
       </>
     );
   }
