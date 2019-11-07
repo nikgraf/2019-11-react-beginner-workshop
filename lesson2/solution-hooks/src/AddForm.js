@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+// <AddForm addPlace={(place) => { doSomething(place)}} />
+
 function AddForm(props) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");

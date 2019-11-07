@@ -3,7 +3,8 @@ import React from "react";
 const initialState = {
   name: "",
   phone: "",
-  email: ""
+  email: "",
+  error: ""
 };
 
 class AddForm extends React.Component {
@@ -29,7 +30,10 @@ class AddForm extends React.Component {
       <form
         onSubmit={evt => {
           evt.preventDefault();
-          if (!this.state.name) return;
+          if (!this.state.name) {
+            this.setState({ error: "Please provide a name!" });
+            return;
+          }
           this.props.addPlace({
             name: this.state.name,
             phone: this.state.phone,
@@ -38,6 +42,9 @@ class AddForm extends React.Component {
           this.setState(initialState);
         }}
       >
+        {this.state.error && (
+          <div style={{ color: "red" }}>{this.state.error}</div>
+        )}
         <input
           type="text"
           value={this.state.name}
