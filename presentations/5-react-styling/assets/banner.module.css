@@ -1,0 +1,10 @@
+.wrapper {
+  background: #570083;
+  color: #ffad83;
+  height: 100%;
+  padding: 3rem;
+}
+
+.text {
+  font-size: 120px;
+}

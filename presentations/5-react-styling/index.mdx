@@ -1,0 +1,256 @@
+import { prism } from "mdx-deck/themes";
+
+export const themes = [prism];
+
+# React
+
+## Why isolate CSS per Component?
+
+Because scaling something that's based on conventions is very very very hard!
+
+https://twitter.com/necolas/status/1058949372837122048
+
+---
+
+import why from "./assets/why.png";
+
+<img src={why} />
+
+---
+
+import whyII from "./assets/whyII.png";
+
+<img src={whyII} />
+
+---
+
+import whyIII from "./assets/whyIII.png";
+
+<img src={whyIII} />
+
+---
+
+## Plain CSS using Classes
+
+### Pro
+
+- flexible
+- no additional tooling needed
+
+### Con
+
+- hard to scale, because if not generated or enforced problematic code emerges
+
+---
+
+## Inline Styles
+
+```jsx
+import React from "react";
+
+const Banner = () => {
+  return (
+    <div
+      style={{
+        background: "#570083",
+        color: "#ffad83",
+        height: "100%",
+        padding: "3rem"
+      }}
+    >
+      <span style={{ fontSize: 120 }}>Hello World!</span>
+    </div>
+  );
+};
+
+export default Banner;
+```
+
+---
+
+import InlineStyles from "./assets/InlineStyles";
+
+<InlineStyles />
+
+---
+
+## Inline Styles
+
+CSS in JS solution
+
+### Pro
+
+- no extra depedency needed (backed into React)
+
+### Con
+
+- can't use pseudoSelectors
+
+---
+
+## JSS
+
+```jsx
+import React from "react";
+import jss from "jss";
+import preset from "jss-preset-default";
+
+jss.setup(preset());
+
+const styles = {
+  wrapper: {
+    background: "#570083",
+    color: "#ffad83",
+    height: "100%",
+    padding: "3rem"
+  },
+  text: {
+    fontSize: 120
+  }
+};
+
+const { classes } = jss.createStyleSheet(styles).attach();
+
+const Banner = () => {
+  return (
+    <div className={classes.wrapper}>
+      <span className={classes.text}>Hello World!</span>
+    </div>
+  );
+};
+
+export default Banner;
+```
+
+---
+
+## JSS
+
+CSS in JS solution
+
+### Pro
+
+- very flexible
+
+### Con
+
+-very flexible
+
+---
+
+# CSS Modules
+
+---
+
+### banner.module.css
+
+```jsx
+.wrapper {
+  background: #570083;
+  color: #ffad83;
+  height: 100%;
+  padding: 3rem;
+}
+
+.text {
+  font-size: 120px;
+}
+```
+
+---
+
+### Banner.jsx
+
+```jsx
+import React from "react";
+import styles from "./banner.module.css";
+
+const Banner = () => {
+  return (
+    <div className={styles.wrapper}>
+      <span className={styles.text}>Hello World!</span>
+    </div>
+  );
+};
+
+export default Banner;
+```
+
+---
+
+## CSS Modules
+
+Isolated CSS
+
+### Pro
+
+- Generates one big stylesheet
+
+### Con
+
+- Needs a custom config in your bundler!
+- No dynamic properties
+
+---
+
+## styled-components
+
+```jsx
+import React from "react";
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+  background: #570083;
+  color: #ffad83;
+  height: 100%;
+  padding: 3rem;
+`;
+
+const Text = styled.span`
+  font-size: 120px;
+`;
+
+const Banner = () => {
+  return (
+    <Wrapper>
+      <Text>Hello World!</Text>
+    </Wrapper>
+  );
+};
+
+export default Banner;
+```
+
+---
+
+import StyledComponents from "./assets/StyledComponents";
+
+<StyledComponents />
+
+---
+
+## styled-components
+
+CSS in JS solution
+
+### Pro
+
+- used by many people in the eco-system (most started CSS in JS solution)
+- Give us some love for Open Source made in Vienna!
+
+### Con
+
+- Can't generate one stylesheet file
+- You might not like the flavour (template tag or object style)
+
+---
+
+## Emotion
+
+CSS in JS solution
+
+The same thing as styled-components with a different history!
+
+---
+
+# The end
