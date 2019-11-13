@@ -14,6 +14,7 @@ export default function App(props) {
               {place.name}
               {place.phone && <Phone phone={place.phone} />}
               {place.email && <div>{place.email}</div>}
+              Loaction: {place.location.lat} / {place.location.long}
               {place.location && place.location.lat && place.location.long && (
                 <Map lat={place.location.lat} long={place.location.long} />
               )}

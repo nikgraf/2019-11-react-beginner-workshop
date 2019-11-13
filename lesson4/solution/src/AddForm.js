@@ -1,15 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
 
 function AddForm(props) {
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
+  const [name, setName] = React.useState("");
+  const [phone, setPhone] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [error, setError] = React.useState(null);
 
   return (
     <form
       onSubmit={evt => {
         evt.preventDefault();
-        if (!name) return;
+        setError(null);
+        if (!name) {
+          setError("Please provide the name")
+          return;
+        }
+        if (!email) {
+          setError("Please provide the email")
+          return;
+        }
         props.addPlace({
           name,
           phone,
@@ -20,6 +29,7 @@ function AddForm(props) {
         setEmail("");
       }}
     >
+      {Boolean(error) && <div style={{ color: 'red'}}>{error}</div>}
       <input
         type="text"
         value={name}
